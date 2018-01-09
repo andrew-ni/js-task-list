@@ -22,7 +22,7 @@ function getTasks() {
     tasks.forEach((task) => {
       const li = document.createElement('li');
       li.className = 'collection-item';
-      li.appendChild(document.createTextNode(task.value));
+      li.appendChild(document.createTextNode(task));
       const link = document.createElement('a');
       link.className = 'fa fa-remove delete-item secondary-content';
       // link.innerHTML = '<i class="fa fa-remove"></i>';
@@ -68,9 +68,26 @@ function removeTask(event) {
   // Event delegation
   if (event.target.classList.contains('delete-item')) {
     if (confirm('Are you sure?')) {
+      removeTaskFromLocalStorage(event.target.parentElement);
       event.target.parentElement.remove();
     }
   }
+}
+
+function removeTaskFromLocalStorage(li) {
+  let tasks;
+  if (localStorage.getItem('tasks') === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem('tasks'));
+  }
+
+  tasks.forEach((task, index) => {
+    if (li.textContent === task) {
+      tasks.splice(index, 1); // delete 1 from the index
+    }
+  });
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 function removeAllTasks(event) {
