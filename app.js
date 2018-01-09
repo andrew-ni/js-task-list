@@ -100,7 +100,13 @@ function removeAllTasks(event) {
     taskList.removeChild(taskList.firstChild);
   }
 
+  clearTasksFromLocalStorage();
+
   // taskList.innerHTML = '';
+}
+
+function clearTasksFromLocalStorage() {
+  localStorage.clear();
 }
 
 function filterTasks(event) {
