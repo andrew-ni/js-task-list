@@ -30,10 +30,21 @@ function addTask(event) {
     li.appendChild(link);
     taskList.appendChild(li);
 
+    storeTaskInLocalStorage(taskInput.value);
+
     taskInput.value = '';
   }
 
   event.preventDefault(); // prevent form submit
+}
+
+function storeTaskInLocalStorage(task) {
+  let tasks;
+  if (localStorage.getItem('tasks') === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem('tasks'));
+  }
 }
 
 function removeTask(event) {
